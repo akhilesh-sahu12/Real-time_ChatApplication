@@ -16,3 +16,7 @@ npm-debug.log
 
 # Ignore system files
 Thumbs.db
+
+# Ignore system files
+server.cert
+server.key
