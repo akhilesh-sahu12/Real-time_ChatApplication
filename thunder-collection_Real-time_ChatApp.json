@@ -1,0 +1,106 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Real-time_ChatApp",
+    "collectionId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+    "dateExported": "2024-05-01T12:59:08.405Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "b6e8ea05-8495-4580-9319-de1bd78ff1f2",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "Register",
+            "url": "https://localhost:3000/api/auth/register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-04-30T19:25:03.563Z",
+            "modified": "2024-05-01T06:30:59.488Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"akhileshsahu\",\n  \"password\": \"akhileshSahu@123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "ec08aedd-55e7-4f9f-8b20-7a17def075eb",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "Login",
+            "url": "https://localhost:3000/api/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-04-30T19:45:18.735Z",
+            "modified": "2024-05-01T08:11:52.144Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"akhileshsahu\",\n  \"password\": \"akhileshSahu@123\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "fbd4feab-efb1-4dfa-8555-bb34b8b7fd31",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "UserProfile",
+            "url": "https://localhost:3000/api/auth/profile",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-04-30T19:59:21.958Z",
+            "modified": "2024-05-01T10:19:45.598Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxNDU1ODc2OSwiZXhwIjoxNzE0NTYyMzY5fQ.ZYgNUdDJCEoKyNmvJ3XfTyteqLUNLvt1qklPUJuN-Ag"
+            }
+        },
+        {
+            "_id": "d09d4f43-e500-4295-a5a5-b3b304788f7f",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "Get All Users",
+            "url": "https://localhost:3000/api/auth/getAllUsers",
+            "method": "GET",
+            "sortNum": 35000,
+            "created": "2024-05-01T11:29:21.962Z",
+            "modified": "2024-05-01T11:55:36.571Z",
+            "headers": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTcxNDU2Mjc5NSwiZXhwIjoxNzE0NTY2Mzk1fQ.zNeZFFTOFPRUS94Tl7rs3zj7_gPcN_QpZTdu5TMZN5E"
+            }
+        },
+        {
+            "_id": "712c5100-5739-47d6-bd28-d9f6297ff5d0",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "Send Message",
+            "url": "https://localhost:3000/api/chat/",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-05-01T08:29:11.059Z",
+            "modified": "2024-05-01T11:43:19.667Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"content\": \"Hey, I am good.\",\n  \"senderId\": 2,\n  \"recipientId\": 1\n}\n",
+                "form": []
+            }
+        },
+        {
+            "_id": "8246fdbc-bf2b-4888-9bef-09158938745a",
+            "colId": "f57d8ac1-344e-4e44-b807-bc52673c7a3c",
+            "containerId": "",
+            "name": "Get History",
+            "url": "https://localhost:3000/api/chat/",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2024-05-01T11:43:26.072Z",
+            "modified": "2024-05-01T11:43:48.115Z",
+            "headers": []
+        }
+    ],
+    "ref": "cw0gHxvplTE0jFQWbF7QW6okCC1NeM8ryVkbgQSKEJ_pWbhOOS22L-R20PJ6EwAHUAR7usxkLQajJwIyfI7pOA"
+}

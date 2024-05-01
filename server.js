@@ -9,6 +9,7 @@ const path = require("path");
 const { initializeWebSocket } = require('./src/utils/websocket');
 const authController=require('./src/controllers/authController')
 const redisClient = require('./src/utils/redisUtils/redisConfig');
+const Message = require('./src/models/messageModel');
 require('dotenv').config();
 
 
@@ -36,11 +37,11 @@ const consumeMessages = require('./src/utils/kafkaUtils/kafkaConsumer');
 produceMessage('chat-app', 'Hello Kafka!');
 consumeMessages('chat-app');
 
-async function nodeRedisDemo() {
+async function setKeyValueInRedis(key, value) {
   try {
     await redisClient.connect();
-    await redisClient.set('Akhilesh', 'Hello from node redis');
-    const myKeyValue = await redisClient.get('Akhilesh');
+    await redisClient.set(key, value);
+    const myKeyValue = await redisClient.get(key);
     console.log(myKeyValue);
     await redisClient.quit();
   } catch (error) {
@@ -48,7 +49,7 @@ async function nodeRedisDemo() {
   }
 }
 // Redis test
-nodeRedisDemo();
+setKeyValueInRedis('Akhilesh', 'Hello from node redis');
 
 
 // Export the Sequelize instance
@@ -103,6 +104,13 @@ io.on('connection', (socket) => {
   socket.on('public-message', (message) => {
       console.log('Public message:', message);
       io.emit('public-message', message);
+      setKeyValueInRedis('Public message:', message);
+      produceMessage('messages', JSON.stringify({
+        "content": message,
+        "senderId": 1,
+        "recipientId": 2
+      }));
+      Message.create({ content:message, senderId:2, recipientId:1 });
   });
 
   // Private chat message event
@@ -112,6 +120,7 @@ io.on('connection', (socket) => {
       console.log(recipientSocket);
       if (recipientSocket) {
           io.to(recipientSocket.id).emit('private-message', message);
+          setKeyValueInRedis('private-message', message)
       } else {
           console.log('Recipient not found');
       }
