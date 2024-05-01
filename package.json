@@ -19,7 +19,7 @@
     "Jest",
     "JMeter"
   ],
-  "author": "akhilesh.sahu",
+  "author": "akhileshSahu12",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -28,6 +28,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "kafka-node": "^5.0.0",
+    "kafkajs": "^2.2.4",
     "pg": "^8.11.5",
     "redis": "^4.6.13",
     "sequelize": "^6.37.3",

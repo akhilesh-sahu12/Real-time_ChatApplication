@@ -1,37 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-time Chat Application</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <h1>Messages</h1>
 
-    <input type="text" id="message" placeholder="Enter Message" />
-    <button id="sendBtn">Send</button>
+    <div>
+        <input type="text" id="message" placeholder="Enter Message" />
+        <button id="sendBtn">Send</button>
+    </div>
 
-    <div id="messages"></div>
+    <div>
+        <h2>Public Chat</h2>
+        <div id="publicMessages"></div>
+    </div>
+
+    <div>
+        <h2>Private Chat</h2>
+        <input type="text" id="privateMessage" placeholder="Enter Private Message" />
+        <select id="users">
+            <!-- Populate this dropdown with user names -->
+        </select>
+        <button id="sendPrivateBtn">Send Private Message</button>
+        <div id="privateMessages"></div>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const socket = io();
-      const sendBtn = document.getElementById("sendBtn");
-      const messageInput = document.getElementById("message");
-      const allMessages = document.getElementById("messages");
+        const socket = io();
+        const sendBtn = document.getElementById("sendBtn");
+        const messageInput = document.getElementById("message");
+        const publicMessages = document.getElementById("publicMessages");
+        const sendPrivateBtn = document.getElementById("sendPrivateBtn");
+        const privateMessageInput = document.getElementById("privateMessage");
+        const usersDropdown = document.getElementById("users");
+        const privateMessages = document.getElementById("privateMessages");
 
-      socket.on("message", (message) => {
-        const p = document.createElement("p");
-        p.innerText = message;
-        allMessages.appendChild(p);
-      });
+        socket.on("public-message", (message) => {
+            const p = document.createElement("p");
+            p.innerText = message;
+            publicMessages.appendChild(p);
+        });
 
-      sendBtn.addEventListener("click", (e) => {
-        const message = messageInput.value;
-        console.log(message);
-        socket.emit("user-message", message);
-      });
+        socket.on("private-message", (message) => {
+            const p = document.createElement("p");
+            p.innerText = message;
+            privateMessages.appendChild(p);
+        });
+
+        socket.on('user-list', (userList) => {
+            console.log('Received user list:', userList);
+            // Update the dropdown menu with the received user list
+            const usersDropdown = document.getElementById("users");
+            usersDropdown.innerHTML = "";
+            userList.forEach(username => {
+                const option = document.createElement("option");
+                option.value = username;
+                option.textContent = username;
+                usersDropdown.appendChild(option);
+            });
+        });
+
+        sendBtn.addEventListener("click", () => {
+            const message = messageInput.value;
+            socket.emit("public-message", message);
+            messageInput.value = ""; // Clear input field
+        });
+
+        sendPrivateBtn.addEventListener("click", () => {
+            const message = privateMessageInput.value;
+            const recipient = usersDropdown.value;
+            socket.emit("private-message", { message, recipient });
+            privateMessageInput.value = ""; // Clear input field
+        });
+
+
     </script>
-  </body>
+</body>
+
 </html>

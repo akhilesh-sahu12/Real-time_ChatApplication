@@ -12,4 +12,7 @@ router.post('/login', authController.login);
 // Route: GET /api/auth/profile
 router.get('/profile', authUtils.authenticateToken, authController.getUserProfile);
 
+// Route: GET /api/auth/getAllUsers
+router.get('/getAllUsers', authUtils.authenticateToken, authController.getAllUsers);
+
 module.exports = router;

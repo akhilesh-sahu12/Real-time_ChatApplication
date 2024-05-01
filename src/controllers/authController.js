@@ -43,7 +43,19 @@ const authController = {
       console.error(error.message);
       res.status(500).json({ error: 'Internal Server Error' });
     }
+  },
+
+async getAllUsers(req, res) {
+  try {
+    // Retrieve all users from the database
+    const users = await userModel.findAll();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
+}
 };
+
 
 module.exports = authController;
