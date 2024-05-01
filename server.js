@@ -4,6 +4,9 @@ const app = express();
 const fs = require('fs');
 const https = require('https');
 const sequelize = require('./config/postgres');
+const { Server } = require("socket.io");
+const path = require("path");
+const { initializeWebSocket } = require('./src/utils/websocket');
 require('dotenv').config();
 
 
@@ -28,6 +31,7 @@ module.exports = sequelize;
 
 // Import routes
 const authRoutes = require('./src/routes/authRoutes');
+const chatRoutes = require('./src/routes/chatRoutes');
 
 // Middleware
 app.use(bodyParser.json());
@@ -42,7 +46,27 @@ const httpsServer = https.createServer(credentials, app);
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/chat', authRoutes);
+app.use('/api/chat', chatRoutes);
+
+const io = new Server(httpsServer);
+
+// Socket.io
+io.on("connection", (socket) => {
+  socket.on("user-message", (message) => {
+    io.emit("message", message);
+  });
+});
+
+app.use(express.static(path.resolve("./public")));
+
+app.get("/", (req, res) => {
+  return res.sendFile("./public/index.html");
+});
+
+// Initialize WebSocket
+// const wss = initializeWebSocket(httpsServer);
+// app.set('wss', wss);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
