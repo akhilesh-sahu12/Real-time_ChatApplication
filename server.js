@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const fs = require('fs');
+const https = require('https');
 const sequelize = require('./config/postgres');
 require('dotenv').config();
+
 
 const port = process.env.PORT || 3000;
 
@@ -29,8 +32,17 @@ const authRoutes = require('./src/routes/authRoutes');
 // Middleware
 app.use(bodyParser.json());
 
+// Read SSL certificate files 
+const credentials = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert'),
+};
+
+const httpsServer = https.createServer(credentials, app);
+
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/chat', authRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -39,6 +51,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(port, () => {
+httpsServer.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
